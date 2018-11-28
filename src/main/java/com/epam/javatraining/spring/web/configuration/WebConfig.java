@@ -19,7 +19,7 @@ import javax.sql.DataSource;
 
 @Configuration
 @EnableWebMvc
-@ComponentScan("com.epam.javatraining.spring.web")
+@ComponentScan("com.epam.javatraining.spring.web.controller")
 public class WebConfig implements WebMvcConfigurer {
 
     @Override

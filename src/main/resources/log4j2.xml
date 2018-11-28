@@ -30,6 +30,12 @@
         <Logger name="TestLogger" level="trace" additivity="false">
             <AppenderRef ref="Console" />
         </Logger>
+        <Logger name="ConfigurationLogger" level="trace" additivity="false">
+            <AppenderRef ref="Console" />
+        </Logger>
+        <Logger name="ControllerLogger" level="trace" additivity="false">
+            <AppenderRef ref="Console" />
+        </Logger>
         <!-- Root Logger -->
         <Root level="trace">
             <AppenderRef ref="Console" />

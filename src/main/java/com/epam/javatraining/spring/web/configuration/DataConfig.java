@@ -1,6 +1,8 @@
 package com.epam.javatraining.spring.web.configuration;
 
 import org.apache.commons.dbcp2.BasicDataSource;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -8,13 +10,14 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 import javax.sql.DataSource;
 
 @Configuration
+@ComponentScan("com.epam.javatraining.spring.web.dao")
 @PropertySource("classpath:dataconfig.properties")
 public class DataConfig {
+    public static Logger logger = LogManager.getLogger("ConfigurationLogger");
 
     @Value("${jdbc.driver}")
     private String jdbcDriver;
@@ -30,13 +33,14 @@ public class DataConfig {
 
     @Bean
     public DataSource dataSource() {
+
         BasicDataSource ds = new BasicDataSource();
         ds.setDriverClassName(jdbcDriver);
         ds.setUrl(jdbcUrl);
         ds.setUsername(jdbcUsername);
         ds.setPassword(jdbcPassword);
         ds.setInitialSize(5);
-
+        logger.trace("Create Data Source " + ds);
         return ds;
     }
 
@@ -47,6 +51,8 @@ public class DataConfig {
 
     @Bean
     public NamedParameterJdbcTemplate namedParJdbcTemplate(DataSource ds) {
-        return new NamedParameterJdbcTemplate(ds);
+        NamedParameterJdbcTemplate t = new NamedParameterJdbcTemplate(ds);
+        logger.trace("Create Data Source " + t);
+        return t;//new NamedParameterJdbcTemplate(ds);
     }
 }
