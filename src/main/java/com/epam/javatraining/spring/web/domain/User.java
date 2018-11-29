@@ -8,7 +8,7 @@ public class User {
     private String username;
     private String password;
     private String email;
-    private Role role;
+    private String role;
     private boolean verified;
 
     public User() {
@@ -84,31 +84,12 @@ public class User {
         this.email = email;
     }
 
-    public Role getRole() {
+    public String getRole() {
         return role;
     }
 
-    public void setRole(Role role) {
+    public void setRole(String role) {
         this.role = role;
-    }
-
-    public enum Role{
-        ADMINISTRATOR("Administrator"),
-        TUTOR("Tutor"),
-        STUDENT("Student");
-
-        private String caption;
-
-        Role(String caption) {
-            this.caption = caption;
-        }
-
-        @Override
-        public String toString() {
-            return caption;
-        }
-
-        public static Role fromOrdinal(int n) {return values()[n];}
     }
 
     public boolean isVerified() {

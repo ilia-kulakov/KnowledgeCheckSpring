@@ -17,18 +17,34 @@ import java.util.Map;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 
 @Controller
-@RequestMapping( {"/"} )
+@RequestMapping( "/" )
 public class HomeController {
 
     public static Logger logger = LogManager.getLogger("ControllerLogger");
 
-
-    @Autowired
-    private UserDao userDao;
-
     @RequestMapping(method=GET)
     public String home(Model model) {
         return "home";
+    }
+
+    @RequestMapping(value="/admin", method=GET)
+    public String admin(Model model) {
+        return "admin";
+    }
+
+    @RequestMapping(value="/tutor", method=GET)
+    public String tutor(Model model) {
+        return "tutor";
+    }
+
+    @RequestMapping(value="/student", method=GET)
+    public String student(Model model) {
+        return "student";
+    }
+
+    @RequestMapping(value="/any", method=GET)
+    public String any(Model model) {
+        return "any";
     }
 
 }

@@ -12,4 +12,21 @@
     <definition name="home" extends="base">
         <put-attribute name="body" value="/WEB-INF/views/home.jsp" />
     </definition>
+
+    <definition name="admin" extends="base">
+        <put-attribute name="body" value="/WEB-INF/views/admin.jsp" />
+    </definition>
+
+    <definition name="tutor" extends="base">
+        <put-attribute name="body" value="/WEB-INF/views/tutor.jsp" />
+    </definition>
+
+    <definition name="student" extends="base">
+        <put-attribute name="body" value="/WEB-INF/views/student.jsp" />
+    </definition>
+
+    <definition name="any" extends="base">
+        <put-attribute name="body" value="/WEB-INF/views/any.jsp" />
+    </definition>
+
 </tiles-definitions>

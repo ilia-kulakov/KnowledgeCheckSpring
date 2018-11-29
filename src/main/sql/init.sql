@@ -1,9 +1,9 @@
 create table IF NOT EXISTS `users` (
-  `user_id` int(11) not null auto_increment,
+  `user_id` bigint(11) not null auto_increment,
   `first_name` varchar(50) not null,
   `last_name` varchar(50) not null,
   `email` varchar(50) not null,
-  `role` int(11) not null,
+  `role` varchar(50) not null,
   `username` varchar(50) not null,
   `password` varchar(200) not null,
   `verified` BOOLEAN NOT NULL DEFAULT FALSE,
@@ -12,7 +12,7 @@ create table IF NOT EXISTS `users` (
 ) ENGINE=InnoDB default charset=utf8mb4 collate = utf8mb4_general_ci;
 
 create table IF NOT EXISTS `tutor_profiles` (
-  `id` int(11) not null,
+  `id` bigint(11) not null,
   `position` varchar(100),
   `scientific_degree` varchar(100),
   `academic_title` varchar(100),
@@ -24,7 +24,7 @@ create table IF NOT EXISTS `tutor_profiles` (
 ) ENGINE=InnoDB default charset=utf8mb4 collate = utf8mb4_general_ci;
 
 create table IF NOT EXISTS `student_profiles` (
-  `id` int(11) not null,
+  `id` bigint(11) not null,
   `specialty` varchar(100),
   `group` varchar(10),
   `year` int(4),
@@ -49,7 +49,7 @@ SELECT t.* FROM (
    WHERE NOT EXISTS (SELECT * FROM `tutor_profiles`);
 
 create table IF NOT EXISTS `subjects` (
-  `id` int(11) not null auto_increment,
+  `id` bigint(11) not null auto_increment,
   `name` varchar(100) not null,
   primary key (`id`),
   unique key `name_unique` (`name`)
@@ -69,8 +69,8 @@ WHERE NOT EXISTS (SELECT * FROM `subjects`);
 
 create table IF NOT EXISTS `tests` (
   `id` bigint(11) not null auto_increment primary key,
-  `subject_id` int(11),
-  `tutor_id` int(11),
+  `subject_id` bigint(11),
+  `tutor_id` bigint(11),
   `update_time` datetime  NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `title` varchar(100),
   `description` varchar(1000)
@@ -327,7 +327,7 @@ SELECT t.* FROM (
 WHERE NOT EXISTS (SELECT * FROM `answers`);
 
 create table IF NOT EXISTS `testing_results` (
-  `student_id` int(11) not null,
+  `student_id` bigint(11) not null,
   `question_id` bigint(11) not null,
   `correct` boolean,
   UNIQUE (`student_id`, `question_id`),

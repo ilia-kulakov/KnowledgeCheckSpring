@@ -126,9 +126,7 @@ public class UserDaoImpl extends AbstractDao implements UserDao {
         user.setUsername( rs.getString("username") );
         user.setPassword( rs.getString("password") );
         user.setVerified( rs.getBoolean("verified"));
-
-        int role = rs.getInt("role");
-        user.setRole( User.Role.fromOrdinal(role) );
+        user.setRole( rs.getString("role") );
 
         return user;
     }
@@ -139,7 +137,7 @@ public class UserDaoImpl extends AbstractDao implements UserDao {
                 .addValue("first_name", user.getFirstName())
                 .addValue("last_name", user.getLastName())
                 .addValue("email", user.getEmail())
-                .addValue("role", (user.getRole() == null) ? null : user.getRole().ordinal() )
+                .addValue("role", user.getRole())
                 .addValue("username", user.getUsername())
                 .addValue("password", user.getPassword())
                 .addValue("verified", user.isVerified());

@@ -3,10 +3,11 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="s" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
-<h1>Home <spring:message code="kcs.welcome" /></h1>
+<h1>Tutor <spring:message code="kcs.welcome" /></h1>
+<a href="<c:url value="/" />">Home</a> |
 <a href="<c:url value="/login" />">Login</a> |
 <a href="<c:url value="/admin" />">Admin</a> |
-<a href="<c:url value="/tutor" />">Tutor</a> |
 <a href="<c:url value="/student" />">Student</a> |
-<a href="<c:url value="/any" />">any</a>
+<a href="<c:url value="/any" />">any</a> |
+<a href="<c:url value="/logout" />">Logout</a>
 

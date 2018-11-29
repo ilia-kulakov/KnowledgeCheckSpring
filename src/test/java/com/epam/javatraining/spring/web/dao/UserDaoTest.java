@@ -9,6 +9,7 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.support.EncodedResource;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.init.ScriptUtils;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import org.springframework.test.jdbc.JdbcTestUtils;
@@ -38,6 +39,12 @@ public class UserDaoTest extends AbstractTestNGSpringContextTests {
 
     @Autowired
     private DataSource dataSource;
+
+    @Test
+    public void test() {
+        String encoded = new BCryptPasswordEncoder().encode("123");
+        logger.trace(encoded);
+    }
 
     @Test
     public void testInsert() {
@@ -208,14 +215,14 @@ public class UserDaoTest extends AbstractTestNGSpringContextTests {
         u1.setUsername("boblearner");
         u1.setEmail("email@mail.ru");
         u1.setPassword("password");
-        u1.setRole(User.Role.STUDENT);
+        u1.setRole("ROLE_STUDENT");
 
         u2.setFirstName("Mary");
         u2.setLastName("White");
         u2.setUsername("marywhite");
         u2.setEmail("mary@mail.ru");
         u2.setPassword("security");
-        u2.setRole(User.Role.TUTOR);
+        u2.setRole("ROLE_TUTOR");
 
         List<User> users = Arrays.asList(u0, u1, u2);
 
@@ -297,7 +304,7 @@ public class UserDaoTest extends AbstractTestNGSpringContextTests {
         user.setUsername("test_user");
         user.setEmail("email@mail.crg");
         user.setPassword((new Date()).toString());
-        user.setRole(User.Role.ADMINISTRATOR);
+        user.setRole("ROLE_ADMINISTRATOR");
 
         return user;
     }
