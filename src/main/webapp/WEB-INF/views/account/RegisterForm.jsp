@@ -9,63 +9,68 @@
 
     <%@ include file = "/WEB-INF/views/common/Alert.jsp" %>
 
-    <s:url var="post_url"  value="/account/register/processing" />
-    <sf:form method="POST" modelAttribute="user" class="form-register text-left col-12"  action="${post_url}">
+    <sf:form method="POST" modelAttribute="userDto" class="form-register text-left col-12">
 
-        <div class="form-row">
+        <div class="form-group">
             <s:message code="app.account.enter_your_first_name" var="placeholder"/>
-            <sf:label path="firstName" cssErrorClass="error" class="col-sm-5 col-form-label" for="inputFirstName">
-                <s:message code="app.account.first_name"/>:
+            <sf:label path="firstName" cssErrorClass="form-label text-danger" class="form-label" for="inputFirstName">
+                <s:message code="app.account.first_name"/>
             </sf:label>
-            <sf:input path="firstName" cssErrorClass="error" id="inputFirstName" class="form-control col-sm-7 mb-1"
+            <sf:input path="firstName" cssErrorClass="form-control  is-invalid" id="inputFirstName" class="form-control "
                    placeholder="${placeholder}" type="text"/>
+            <sf:errors path="firstName" element="small" cssClass="help-block text-danger" />
         </div>
-        <div class="form-row">
+        <div class="form-group">
             <s:message code="app.account.enter_your_last_name" var="placeholder"/>
-            <sf:label path="lastName" cssErrorClass="error" class="col-sm-5 col-form-label" for="inputLastName" >
-                <s:message code="app.account.last_name"/>:
+            <sf:label path="lastName" cssErrorClass="form-label text-danger" class="form-label" for="inputLastName" >
+                <s:message code="app.account.last_name"/>
             </sf:label>
-            <sf:input path="lastName" cssErrorClass="error" id="inputLastName" class="form-control col-sm-7 mb-1"
+            <sf:input path="lastName" cssErrorClass="form-control  is-invalid" id="inputLastName" class="form-control "
                    placeholder="${placeholder}" type="text"/>
+            <sf:errors path="lastName" element="small" cssClass="text-danger" />
         </div>
-        <div class="form-row">
+        <div class="form-group">
             <s:message code="app.account.enter_your_username" var="placeholder"/>
-            <sf:label path="username" cssErrorClass="error" class="col-sm-5 col-form-label" for="inputUsername" >
-                <s:message code="app.account.username"/>:
+            <sf:label path="username" cssErrorClass="form-label text-danger" class="form-label" for="inputUsername" >
+                <s:message code="app.account.username"/>
             </sf:label>
-            <sf:input path="username" cssErrorClass="error" id="inputUsername" class="form-control col-sm-7 mb-1"
+            <sf:input path="username" cssErrorClass="form-control  is-invalid" id="inputUsername" class="form-control "
                       placeholder="${placeholder}" type="username"/>
+            <sf:errors path="username" element="small" cssClass="text-danger" />
         </div>
-        <div class="form-row">
+        <div class="form-group">
             <s:message code="app.account.enter_your_real_email_address" var="placeholder"/>
-            <sf:label path="email" cssErrorClass="error" class="col-sm-5 col-form-label" for="inputEmail" >
-                <s:message code="app.account.email"/>:
+            <sf:label path="email" cssErrorClass="form-label text-danger" class="form-label" for="inputEmail" >
+                <s:message code="app.account.email"/>
             </sf:label>
-            <sf:input path="email" cssErrorClass="error" id="inputEmail" class="form-control col-sm-7 mb-1"
+            <sf:input path="email" cssErrorClass="form-control  is-invalid" id="inputEmail" class="form-control "
                    placeholder="${placeholder}" type="email"/>
+            <sf:errors path="email" element="small" cssClass="text-danger" />
         </div>
-        <div class="form-row">
+        <div class="form-group">
             <s:message code="app.account.enter_your_password" var="placeholder"/>
-            <sf:label path="password" cssErrorClass="error" class="col-sm-5 col-form-label" for="inputPassword" >
-                <s:message code="app.account.password"/>:
+            <sf:label path="password" cssErrorClass="form-label text-danger" class="form-label" for="inputPassword" >
+                <s:message code="app.account.password"/>
             </sf:label>
-            <sf:input path="password" cssErrorClass="error" id="inputPassword" class="form-control col-sm-7 mb-1"
+            <sf:input path="password" cssErrorClass="form-control  is-invalid" id="inputPassword" class="form-control "
                    placeholder="${placeholder}" required="" type="password"/>
+            <sf:errors path="password" element="small" cssClass="text-danger" />
         </div>
-        <div class="form-row">
+        <div class="form-group">
             <s:message code="app.account.repeat_your_password" var="placeholder"/>
-            <sf:label path="repeatPassword" cssErrorClass="error" class="col-sm-5 col-form-label" for="inputRepeatPassword">
-                <s:message code="app.account.repeat_password"/>:
+            <sf:label path="confirmPassword" cssErrorClass="form-label text-danger" class="form-label" for="inputRepeatPassword">
+                <s:message code="app.account.repeat_password"/>
             </sf:label>
-            <sf:input path="repeatPassword" cssErrorClass="error" id="inputRepeatPassword" class="form-control col-sm-7 mb-1"
+            <sf:input path="confirmPassword" cssErrorClass="form-control  is-invalid" id="inputRepeatPassword" class="form-control "
                    placeholder="${placeholder}" required="" type="password"/>
+            <sf:errors path="confirmPassword" element="small" cssClass="text-danger" />
         </div>
-        <div class="form-row">
-            <label class="col-sm-5 col-form-label" for="selectRole" ><s:message code="app.account.role"/>:</label>
-            <select id="selectRole" name="role" class="custom-select form-control col-sm-7 mb-1">
-                <option disabled>Choose a role</option>
+        <div class="form-group">
+            <label class="form-label" for="selectRole" ><s:message code="app.account.role"/></label>
+            <select id="selectRole" name="role" class="custom-select form-control ">
+                <option disabled><s:message code="app.account.choose_a_role"/></option>
                 <c:forEach var="role" items="${roles.list}">
-                    <option <c:if test="${role == user.role}">selected</c:if>  value="${role}">
+                    <option <c:if test="${role == userDto.role}">selected</c:if>  value="${role}">
                         <s:message code="${roles.getDescription(role)}"></s:message>
                     </option>
                 </c:forEach>
@@ -95,7 +100,7 @@
     </sf:form>
 
     <script>
-        $("input").attr('required', '');
+        // $("input").attr('required', '');
     </script>
 
 </div>

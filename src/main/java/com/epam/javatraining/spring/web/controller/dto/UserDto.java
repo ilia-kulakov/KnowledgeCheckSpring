@@ -1,30 +1,46 @@
 package com.epam.javatraining.spring.web.controller.dto;
 
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
+import org.hibernate.validator.constraints.ScriptAssert;
 
+import javax.validation.constraints.*;
+
+@ScriptAssert(
+        lang = "javascript",
+        script="_this.password.equals(_this.confirmPassword)",
+        message="{app.account.password.passwords_do_not_match}",
+        reportOn="confirmPassword")
 public class UserDto {
-    @NotNull
-    @NotEmpty
+    @NotNull(message="{app.account.firstName.not_empty}")
+	@NotEmpty(message="{app.account.firstName.not_empty}")
+    @Size(min=3, max=50, message="{app.account.firstName.size}")
     private String firstName;
-    @NotNull
-    @NotEmpty
+
+    @NotNull(message="{app.account.lastName.not_empty}")
+	@NotEmpty(message="{app.account.lastName.not_empty}")
+    @Size(min=3, max=50, message="{app.account.lastName.size}")
     private String lastName;
-    @NotNull
-    @NotEmpty
+
+    @NotNull(message="{app.account.username.not_empty}")
+	@NotEmpty(message="{app.account.username.not_empty}")
+    @Size(min=3, max=50, message="{app.account.username.size}")
     private String username;
-    @NotNull
-    @NotEmpty
+
+    @NotNull(message="{app.account.password.not_empty}")
+	@NotEmpty(message="{app.account.password.not_empty}")
+    @Size(min=3, max=100, message="{app.account.password.size}")
     private String password;
-    @NotNull
-    @NotEmpty
-    private String repeatPassword;
-    @NotNull
-    @Email
+
+    @NotNull(message="{app.account.confirm_password.not_empty}")
+	@NotEmpty(message="{app.account.confirm_password.not_empty}")
+    private String confirmPassword;
+
+    @NotNull(message="{app.account.email.not_empty}")
+	@NotEmpty(message="{app.account.email.not_empty}")
+    @Email(message="{app.account.email.valid}")
     private String email;
-    @NotNull
-    @NotEmpty
+
+    @NotNull(message="{app.account.role.valid}")
+	@NotEmpty(message="{app.account.role.valid}")
     private String role;
 
     public String getFirstName() {
@@ -59,12 +75,12 @@ public class UserDto {
         this.password = password;
     }
 
-    public String getRepeatPassword() {
-        return repeatPassword;
+    public String getConfirmPassword() {
+        return confirmPassword;
     }
 
-    public void setRepeatPassword(String repeatPassword) {
-        this.repeatPassword = repeatPassword;
+    public void setConfirmPassword(String confirmPassword) {
+        this.confirmPassword = confirmPassword;
     }
 
     public String getEmail() {
