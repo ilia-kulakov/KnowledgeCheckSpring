@@ -38,4 +38,12 @@
         <put-attribute name="body" value="/WEB-INF/views/account/LogoutForm.jsp" />
     </definition>
 
+    <definition name="account/register" extends="base">
+        <put-attribute name="body" value="/WEB-INF/views/account/RegisterForm.jsp" />
+    </definition>
+
+    <definition name="account/recovery" extends="base">
+        <put-attribute name="body" value="/WEB-INF/views/account/RecoveryForm.jsp" />
+    </definition>
+
 </tiles-definitions>

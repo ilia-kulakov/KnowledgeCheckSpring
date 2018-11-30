@@ -3,6 +3,7 @@ package com.epam.javatraining.spring.web.configuration;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.ComponentScans;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.web.servlet.LocaleResolver;
@@ -18,7 +19,10 @@ import org.springframework.web.servlet.view.tiles3.TilesViewResolver;
 
 @Configuration
 @EnableWebMvc
-@ComponentScan("com.epam.javatraining.spring.web.controller")
+@ComponentScans({
+        @ComponentScan("com.epam.javatraining.spring.web.controller"),
+        @ComponentScan("com.epam.javatraining.spring.web.service")
+})
 public class WebConfig implements WebMvcConfigurer {
 
     @Override

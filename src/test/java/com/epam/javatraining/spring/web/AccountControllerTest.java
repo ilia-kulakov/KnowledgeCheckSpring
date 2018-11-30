@@ -16,18 +16,31 @@ public class AccountControllerTest {
     @Test
     public void testShouldShowLoginForm() throws Exception {
 
-        AccountController controller = new AccountController();
-        MockMvc mockMvc = MockMvcBuilders.standaloneSetup(controller).build();
-        mockMvc.perform(MockMvcRequestBuilders.get("/account/login"))
-                .andExpect(MockMvcResultMatchers.view().name("account/login"));
+        testGetMethod("/account/login", "account/login");
     }
 
     @Test
     public void testShouldShowLogoutForm() throws Exception {
 
+        testGetMethod("/account/logout", "account/logout");
+    }
+
+    @Test
+    public void testShouldShowRecoveryForm() throws Exception {
+
+        testGetMethod("/account/recovery", "account/recovery");
+    }
+
+    @Test
+    public void testShouldShowRegisterForm() throws Exception {
+
+        testGetMethod("/account/register", "account/register");
+    }
+
+    private void testGetMethod(String urlTemplate, String expectedViewName) throws Exception {
         AccountController controller = new AccountController();
         MockMvc mockMvc = MockMvcBuilders.standaloneSetup(controller).build();
-        mockMvc.perform(MockMvcRequestBuilders.get("/account/logout"))
-                .andExpect(MockMvcResultMatchers.view().name("account/logout"));
+        mockMvc.perform(MockMvcRequestBuilders.get(urlTemplate))
+                .andExpect(MockMvcResultMatchers.view().name(expectedViewName));
     }
 }

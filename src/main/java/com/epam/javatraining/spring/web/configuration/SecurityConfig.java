@@ -2,7 +2,6 @@ package com.epam.javatraining.spring.web.configuration;
 
 import com.epam.javatraining.spring.web.tools.AlertManager;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -13,9 +12,6 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.servlet.LocaleResolver;
-
-import java.util.Locale;
 
 import javax.sql.DataSource;
 
@@ -26,22 +22,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 
     private DataSource dataSource;
-    private LocaleResolver localeResolver;
-    private MessageSource messageSource;
 
     @Autowired
     public void setDataSource(DataSource dataSource) {
         this.dataSource = dataSource;
-    }
-
-    @Autowired
-    public void setLocalResolver(LocaleResolver localeResolver) {
-        this.localeResolver = localeResolver;
-    }
-
-    @Autowired
-    public void setMessageSource(MessageSource messageSource) {
-        this.messageSource = messageSource;
     }
 
     @Override
@@ -79,6 +63,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/account/login").permitAll()
                 .antMatchers("/account/login/**").permitAll()
                 .antMatchers("/account/logout").permitAll()
+                .antMatchers("/account/register").permitAll()
+                .antMatchers("/account/register/**").permitAll()
+                .antMatchers("/account/recovery").permitAll()
+                .antMatchers("/account/recovery/**").permitAll()
                 .antMatchers("/resources/static/**").permitAll()
                 .anyRequest().authenticated()
         .and()
@@ -88,12 +76,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .defaultSuccessUrl("/")
                 .failureHandler((req, res, exp)->{  // Failure handler invoked after authentication failure
 
-                    Locale locale = localeResolver.resolveLocale(req);
                     String errMsg;
                     if(exp.getClass().isAssignableFrom(BadCredentialsException.class)){
-                        errMsg= messageSource.getMessage("app.account.login_error", new Object[0], locale);
+                        errMsg= "app.account.login_error";
                     }else{
-                        errMsg= messageSource.getMessage("app.common.unknown_error", new Object[0], locale);
+                        errMsg= "app.common.unknown_error";
                     }
                     AlertManager.pullFromSession(req.getSession()).danger(errMsg);
                     res.sendRedirect(req.getContextPath() + "/account/login"); // Redirect user to login page with error message.
