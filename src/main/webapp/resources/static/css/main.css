@@ -68,12 +68,13 @@ body {
     justify-content: flex-end;
 }
 
-.form-login, .form-register, .form-recovery {
+.form-login, .form-register, .form-recovery, .form-logout{
     width: 100%;
     margin: auto;
 }
 
-.form-login {
+div .form-login, .form-logout{
+    width: 100%;
     max-width: 330px;
 }
 

@@ -29,4 +29,13 @@
         <put-attribute name="body" value="/WEB-INF/views/any.jsp" />
     </definition>
 
+
+    <definition name="account/login" extends="base">
+        <put-attribute name="body" value="/WEB-INF/views/account/LoginForm.jsp" />
+    </definition>
+
+    <definition name="account/logout" extends="base">
+        <put-attribute name="body" value="/WEB-INF/views/account/LogoutForm.jsp" />
+    </definition>
+
 </tiles-definitions>

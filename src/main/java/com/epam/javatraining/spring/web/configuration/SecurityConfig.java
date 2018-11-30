@@ -1,17 +1,21 @@
 package com.epam.javatraining.spring.web.configuration;
 
+import com.epam.javatraining.spring.web.tools.AlertManager;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.ComponentScans;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.servlet.LocaleResolver;
+
+import java.util.Locale;
 
 import javax.sql.DataSource;
 
@@ -20,8 +24,25 @@ import javax.sql.DataSource;
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    @Autowired
+
     private DataSource dataSource;
+    private LocaleResolver localeResolver;
+    private MessageSource messageSource;
+
+    @Autowired
+    public void setDataSource(DataSource dataSource) {
+        this.dataSource = dataSource;
+    }
+
+    @Autowired
+    public void setLocalResolver(LocaleResolver localeResolver) {
+        this.localeResolver = localeResolver;
+    }
+
+    @Autowired
+    public void setMessageSource(MessageSource messageSource) {
+        this.messageSource = messageSource;
+    }
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth)
@@ -48,24 +69,45 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
 
         http
+            .authorizeRequests()
+
+                .antMatchers("/admin").hasRole("ADMIN")
+                .antMatchers("/tutor").hasRole("TUTOR")
+                .antMatchers("/student").hasRole("STUDENT")
+
+                .antMatchers("/").permitAll()
+                .antMatchers("/account/login").permitAll()
+                .antMatchers("/account/login/**").permitAll()
+                .antMatchers("/account/logout").permitAll()
+                .antMatchers("/resources/static/**").permitAll()
+                .anyRequest().authenticated()
+        .and()
             .formLogin()
-                .loginProcessingUrl("/account/login")
+                .loginPage("/account/login")
+                .loginProcessingUrl("/account/login/processing")
+                .defaultSuccessUrl("/")
+                .failureHandler((req, res, exp)->{  // Failure handler invoked after authentication failure
+
+                    Locale locale = localeResolver.resolveLocale(req);
+                    String errMsg;
+                    if(exp.getClass().isAssignableFrom(BadCredentialsException.class)){
+                        errMsg= messageSource.getMessage("app.account.login_error", new Object[0], locale);
+                    }else{
+                        errMsg= messageSource.getMessage("app.common.unknown_error", new Object[0], locale);
+                    }
+                    AlertManager.pullFromSession(req.getSession()).danger(errMsg);
+                    res.sendRedirect(req.getContextPath() + "/account/login"); // Redirect user to login page with error message.
+                })
+                .permitAll()
         .and()
             .rememberMe()
                 .tokenValiditySeconds(30)
                 .key("KnowledgeCheckKey")
         .and()
             .logout()
-                .logoutUrl("/account/logout")
+                .logoutUrl("/account/logout/processing")
                 .logoutSuccessUrl("/")
-        .and()
-            .authorizeRequests()
-                .antMatchers("/admin").hasRole("ADMIN")
-                .antMatchers("/tutor").hasRole("TUTOR")
-                .antMatchers("/student").hasRole("STUDENT")
-                .antMatchers("/login").permitAll()
-                .antMatchers("/").permitAll()
-                //.anyRequest().authenticated()
+                .permitAll()
         .and()
             .requiresChannel()
                 .antMatchers("/spitter/form")

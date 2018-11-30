@@ -3,6 +3,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="s" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
-<h1>Any <spring:message code="kcs.welcome" /></h1>
+<h1>Any <spring:message code="app.welcome" /></h1>
 <a href="<c:url value="/login" />">Login</a>
 
