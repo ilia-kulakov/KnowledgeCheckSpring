@@ -8,6 +8,7 @@ create table IF NOT EXISTS `users` (
   `username` varchar(50) not null,
   `password` varchar(200) not null,
   `verified` BOOLEAN NOT NULL DEFAULT FALSE,
+  `activated` BOOLEAN NOT NULL DEFAULT FALSE,
   primary key (`user_id`),
   unique key `username_unique` (`username`)
   ) ENGINE=InnoDB default charset=utf8mb4 collate = utf8mb4_general_ci;

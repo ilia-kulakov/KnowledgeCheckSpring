@@ -1,8 +1,8 @@
-package com.epam.javatraining.spring.web.dao;
+package com.epam.javatraining.spring.web.service;
 
 import java.util.List;
 
-public interface BasicDao<E, K> {
+public interface BasicService<E, K> {
 
     K insert(E entity);
 

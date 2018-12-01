@@ -82,7 +82,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     }else{
                         errMsg= "app.common.unknown_error";
                     }
-                    AlertManager.pullFromSession(req.getSession(true)).danger(errMsg);
+                    AlertManager manager = new AlertManager();
+                    manager.danger(errMsg);
+                    req.getSession(true).setAttribute("alertManager", manager);
                     res.sendRedirect(req.getContextPath() + "/account/login"); // Redirect user to login page with error message.
                 })
                 .permitAll()

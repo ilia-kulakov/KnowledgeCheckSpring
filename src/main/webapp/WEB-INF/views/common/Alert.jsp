@@ -11,6 +11,7 @@
 
         </div>
     </c:forEach>
-    ${alertManager.clear}
+
+    <c:remove var = "alertManager"/>
 </c:if>
 

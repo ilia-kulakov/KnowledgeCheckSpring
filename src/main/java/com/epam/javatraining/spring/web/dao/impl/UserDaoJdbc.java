@@ -14,12 +14,12 @@ import java.sql.SQLException;
 import java.util.List;
 
 @Repository
-public class UserDaoImpl extends AbstractDao implements UserDao {
+public class UserDaoJdbc extends AbstractDao implements UserDao {
 
     @Override
     public Long insert(User user) {
-        String sql = "INSERT INTO users (first_name, last_name, email, role, username, password, verified) " +
-                "VALUES(:first_name, :last_name, :email, :role, :username, :password, :verified)";
+        String sql = "INSERT INTO users (first_name, last_name, email, role, username, password, verified, activated) " +
+                "VALUES(:first_name, :last_name, :email, :role, :username, :password, :verified, :activated)";
 
         KeyHolder keyHolder = new GeneratedKeyHolder();
         SqlParameterSource params = getParameterSrc(user);
@@ -42,6 +42,7 @@ public class UserDaoImpl extends AbstractDao implements UserDao {
                 "username = :username, " +
                 "password = :password, " +
                 "verified = :verified " +
+                "activated = :activated " +
                 "WHERE user_id = :user_id";
 
         SqlParameterSource params = getParameterSrc(user);
@@ -126,6 +127,7 @@ public class UserDaoImpl extends AbstractDao implements UserDao {
         user.setUsername( rs.getString("username") );
         user.setPassword( rs.getString("password") );
         user.setVerified( rs.getBoolean("verified"));
+        user.setActivated( rs.getBoolean("activated"));
         user.setRole( rs.getString("role") );
 
         return user;
@@ -140,6 +142,7 @@ public class UserDaoImpl extends AbstractDao implements UserDao {
                 .addValue("role", user.getRole())
                 .addValue("username", user.getUsername())
                 .addValue("password", user.getPassword())
-                .addValue("verified", user.isVerified());
+                .addValue("verified", user.isVerified())
+                .addValue("activated", user.isActivated());
     }
 }

@@ -69,9 +69,9 @@
             <label class="form-label" for="selectRole" ><s:message code="app.account.role"/></label>
             <select id="selectRole" name="role" class="custom-select form-control ">
                 <option disabled><s:message code="app.account.choose_a_role"/></option>
-                <c:forEach var="role" items="${roles.list}">
+                <c:forEach var="role" items="${roles.roleList}">
                     <option <c:if test="${role == userDto.role}">selected</c:if>  value="${role}">
-                        <s:message code="${roles.getDescription(role)}"></s:message>
+                        <s:message code="${roles.getRoleDescription(role)}"></s:message>
                     </option>
                 </c:forEach>
             </select>

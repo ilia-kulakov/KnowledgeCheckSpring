@@ -65,20 +65,4 @@ public class AlertManager {
     public  void success(List<String> messages) {
         push("success", messages);
     }
-
-    public static AlertManager pullFromSession(HttpSession session) {
-
-        AlertManager manager = (AlertManager)session.getAttribute("alertManager");
-
-        if( manager == null ) {
-            manager = new AlertManager();
-            manager.pushToSession(session);
-        }
-
-        return manager;
-    }
-
-    public void pushToSession(HttpSession session) {
-        session.setAttribute("alertManager", this);
-    }
 }

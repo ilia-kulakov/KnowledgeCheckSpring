@@ -10,6 +10,7 @@ public class User {
     private String email;
     private String role;
     private boolean verified;
+    private boolean activated;
 
     public User() {
     }
@@ -98,6 +99,14 @@ public class User {
 
     public void setVerified(boolean verified) {
         this.verified = verified;
+    }
+
+    public boolean isActivated() {
+        return activated;
+    }
+
+    public void setActivated(boolean activated) {
+        this.activated = activated;
     }
 
     public String toString() {
